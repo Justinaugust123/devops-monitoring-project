@@ -1,0 +1,13 @@
+{
+  "name": "devops-monitoring-app",
+  "version": "1.0.0",
+  "description": "Node.js DevOps CI/CD monitoring project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "prom-client": "^15.1.3"
+  }
+}
