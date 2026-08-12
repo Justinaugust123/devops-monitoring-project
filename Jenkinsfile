@@ -1,8 +1,9 @@
 pipeline {
+
     agent any
 
     environment {
-        IMAGE_NAME = "justinaugust123/devops-monitoring-app"
+        IMAGE_NAME = "justinaugust123/devops-monitoring-project-app"
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
@@ -14,13 +15,19 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Build Docker Image') {
             steps {
                 sh '''
                     docker build \
-                      -t ${IMAGE_NAME}:${IMAGE_TAG} \
-                      -t ${IMAGE_NAME}:latest \
-                      .
+                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                    -t ${IMAGE_NAME}:latest \
+                    .
                 '''
             }
         }
@@ -35,19 +42,19 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                        echo "$DOCKER_PASSWORD" | docker login docker.io \
-                          -u "$DOCKER_USERNAME" \
-                          --password-stdin
+                        echo "$DOCKER_PASSWORD" | docker login \
+                        -u "$DOCKER_USERNAME" \
+                        --password-stdin
                     '''
                 }
             }
         }
 
-        stage('Push') {
+        stage('Push Docker Image') {
             steps {
                 sh '''
-                    docker push docker.io/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker push docker.io/${IMAGE_NAME}:latest
+                    docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push ${IMAGE_NAME}:latest
                 '''
             }
         }
@@ -55,8 +62,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    docker compose pull
-                    docker compose up -d
+                    docker compose down
+                    docker compose up -d --build
                 '''
             }
         }
@@ -64,7 +71,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout docker.io || true'
+            sh 'docker logout || true'
         }
 
         success {
