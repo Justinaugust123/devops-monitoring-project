@@ -1,7 +1,7 @@
 services:
 
   app:
-    build: .
+    image: docker.io/justinaugust123/devops-monitoring-app:latest
     container_name: devops-app
     ports:
       - "3000:3000"
