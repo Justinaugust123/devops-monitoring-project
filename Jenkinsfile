@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "justinaugust123/devops-monitoring-project-app"
-        IMAGE_TAG = "${BUILD_NUMBER}"
+        IMAGE_NAME = "docker.io/justinaugust123/devops-monitoring-project-app"
+        IMAGE_TAG  = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -25,9 +25,9 @@ pipeline {
             steps {
                 sh '''
                     docker build \
-                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
-                    -t ${IMAGE_NAME}:latest \
-                    .
+                      -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                      -t ${IMAGE_NAME}:latest \
+                      .
                 '''
             }
         }
@@ -42,9 +42,9 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                        echo "$DOCKER_PASSWORD" | docker login \
-                        -u "$DOCKER_USERNAME" \
-                        --password-stdin
+                        echo "$DOCKER_PASSWORD" | docker login docker.io \
+                          -u "$DOCKER_USERNAME" \
+                          --password-stdin
                     '''
                 }
             }
@@ -63,15 +63,17 @@ pipeline {
             steps {
                 sh '''
                     docker compose down
-                    docker compose up -d --build
+                    docker compose pull
+                    docker compose up -d
                 '''
             }
         }
     }
 
     post {
+
         always {
-            sh 'docker logout || true'
+            sh 'docker logout docker.io || true'
         }
 
         success {
