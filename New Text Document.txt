@@ -1,0 +1,301 @@
+echo "pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/Justinaugust123/devops2.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the app...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+            }
+        }
+    }
+}" >> Jenkins
+
+
+
+
+
+
+
+
+
+
+docker run -d \
+  --name jenkins \
+  -p 8081:8081 \
+  -p 60000:60000 \
+  -v jenkins_home:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkins-docker
+
+
+
+
+
+
+
+
+
+
+
+root@DESKTOP-QC3MR27:/home/justin/jenkins_home# find /home/justin -maxdepth 3 -name Dockerfile -print
+/home/justin/jenkins/docker-cicd-demo/Dockerfile
+/home/justin/my-website/my-website/Dockerfile
+/home/justin/my-website/Dockerfile
+/home/justin/docker-cicd-demo/Dockerfile
+root@DESKTOP-QC3MR27:/home/justin/jenkins_home# cd /home/justin/my-website
+root@DESKTOP-QC3MR27:/home/justin/my-website# ls -la
+total 36
+[+] Building 90.3s (4/6)                                                                                 docker:default
+ => [internal] load build definition from Dockerfile                                                               0.4s
+ => => transferring dockerfile: 184B                                                                               0.1s
+ => [internal] load metadata for docker.io/jenkins/jenkins:lts                                                     3.9s
+ => [auth] jenkins/jenkins:pull token for registry-1.docker.io                                                     0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [1/2] FROM docker.io/jenkins/jenkins:lts@sha256:8547df3b0db2803d158ecc9499207a056bb30c23fddc18bb5b4a4dc14e77  85.8s
+ => => resolve docker.io/jenkins/jenkins:lts@sha256:8547df3b0db2803d158ecc9499207a056bb30c23fddc18bb5b4a4dc14e77d  0.1s
+ => => sha256:18e2bde91fb067df55af69149ac5e3edaf075d403d079d1b471fad9ac8b4fe62 1.29kB / 1.29kB                     0.3s
+ => => sha256:adea3ef8b4db3e85e81608a94ff829a46d51669a65671056c1752bd8b8da8232 391B / 391B                         0.6s
+ => => sha256:a5e3afd1e0b3cf2f1b5d1230490decd35079d8e941c321618ed2efef69ba9bfd 2.65kB / 2.65kB                     0.8s
+ => => sha256:ae71a7561ea537a28198d728269b680eda28ec3bb9fa45ec2583730670554f66 100.98MB / 100.98MB                74.1s
+ => => sha256:f19a623914320692b9eb745387631946e7f30fb87f577b2d2a5d25b4d02ea044 72.24MB / 72.24MB                  64.4s
+ => => sha256:8957c4df8f9d89bcbe692b371fe0add0af6f617d75267a0589ec43bdaa94be79 6.45MB / 6.45MB                     6.4s
+ => => sha256:844d30ade61d27e39771ded7f6e50a42d294ac1b6c467e6caf9920a3ae2f44b1 188B / 188B                         0.3s
+ => => sha256:add9a913292e0ee6b6256120462f6013e47cfc83ca38fe62c910e31ef8903916 182B / 182B                         0.3s
+ => => sha256:01f97d1e583fbbd652ca4ab0b94b888be23dc84099735684e9095dbea4cc136a 1.23kB / 1.23kB                     0.3s
+ => => sha256:d8ae5f65d97ef1b391bb3099597b31795f93d772af2d2be7fad21a649bc1fb2e 5.24MB / 5.24MB                     1.4s
+ => => sha256:a52ea482db5702afb15f638193ca97b9407c96114089cf0a0205a69f32e571a7 55.63MB / 55.63MB                  34.4s
+[+] Building 93.0s (4/6)                                                                                 docker:default
+ => [internal] load build definition from Dockerfile                                                               0.4s
+ => => transferring dockerfile: 184B                                                                               0.1s
+[+] Building 126.5s (5/6)                                                                                docker:default
+ => => sha256:ae71a7561ea537a28198d728269b680eda28ec3bb9fa45ec2583730670554f66 100.98MB / 100.98MB                74.1s
+ => => sha256:f19a623914320692b9eb745387631946e7f30fb87f577b2d2a5d25b4d02ea044 72.24MB / 72.24MB                  64.4s
+ => => sha256:8957c4df8f9d89bcbe692b371fe0add0af6f617d75267a0589ec43bdaa94be79 6.45MB / 6.45MB                     6.4s
+ => => sha256:844d30ade61d27e39771ded7f6e50a42d294ac1b6c467e6caf9920a3ae2f44b1 188B / 188B                         0.3s
+ => => sha256:add9a913292e0ee6b6256120462f6013e47cfc83ca38fe62c910e31ef8903916 182B / 182B                         0.3s
+ => => sha256:01f97d1e583fbbd652ca4ab0b94b888be23dc84099735684e9095dbea4cc136a 1.23kB / 1.23kB                     0.3s
+ => => sha256:d8ae5f65d97ef1b391bb3099597b31795f93d772af2d2be7fad21a649bc1fb2e 5.24MB / 5.24MB                     1.4s
+ => => sha256:a52ea482db5702afb15f638193ca97b9407c96114089cf0a0205a69f32e571a7 55.63MB / 55.63MB                  34.4s
+[+] Building 279.2s (6/7)                                                                                docker:default
+ => => resolve docker.io/jenkins/jenkins:lts@sha256:8547df3b0db2803d158ecc9499207a056bb30c23fddc18bb5b4a4dc14e77d  0.1s
+ => => sha256:18e2bde91fb067df55af69149ac5e3edaf075d403d079d1b471fad9ac8b4fe62 1.29kB / 1.29kB                     0.3s
+ => => sha256:adea3ef8b4db3e85e81608a94ff829a46d51669a65671056c1752bd8b8da8232 391B / 391B                         0.6s
+ => => sha256:a5e3afd1e0b3cf2f1b5d1230490decd35079d8e941c321618ed2efef69ba9bfd 2.65kB / 2.65kB                     0.8s
+ => => sha256:ae71a7561ea537a28198d728269b680eda28ec3bb9fa45ec2583730670554f66 100.98MB / 100.98MB                74.1s
+[+] Building 322.9s (7/7) FINISHED                                                                       docker:default
+ => [internal] load build definition from Dockerfile                                                               0.4s
+ => => transferring dockerfile: 184B                                                                               0.1s
+ => [internal] load metadata for docker.io/jenkins/jenkins:lts                                                     3.9s
+ => [auth] jenkins/jenkins:pull token for registry-1.docker.io                                                     0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [1/2] FROM docker.io/jenkins/jenkins:lts@sha256:8547df3b0db2803d158ecc9499207a056bb30c23fddc18bb5b4a4dc14e77  97.8s
+ => => resolve docker.io/jenkins/jenkins:lts@sha256:8547df3b0db2803d158ecc9499207a056bb30c23fddc18bb5b4a4dc14e77d  0.1s
+ => => sha256:18e2bde91fb067df55af69149ac5e3edaf075d403d079d1b471fad9ac8b4fe62 1.29kB / 1.29kB                     0.3s
+ => => sha256:adea3ef8b4db3e85e81608a94ff829a46d51669a65671056c1752bd8b8da8232 391B / 391B                         0.6s
+ => => sha256:a5e3afd1e0b3cf2f1b5d1230490decd35079d8e941c321618ed2efef69ba9bfd 2.65kB / 2.65kB                     0.8s
+ => => sha256:ae71a7561ea537a28198d728269b680eda28ec3bb9fa45ec2583730670554f66 100.98MB / 100.98MB                74.1s
+ => => sha256:f19a623914320692b9eb745387631946e7f30fb87f577b2d2a5d25b4d02ea044 72.24MB / 72.24MB                  64.4s
+ => => sha256:8957c4df8f9d89bcbe692b371fe0add0af6f617d75267a0589ec43bdaa94be79 6.45MB / 6.45MB                     6.4s
+ => => sha256:844d30ade61d27e39771ded7f6e50a42d294ac1b6c467e6caf9920a3ae2f44b1 188B / 188B                         0.3s
+ => => sha256:add9a913292e0ee6b6256120462f6013e47cfc83ca38fe62c910e31ef8903916 182B / 182B                         0.3s
+ => => sha256:01f97d1e583fbbd652ca4ab0b94b888be23dc84099735684e9095dbea4cc136a 1.23kB / 1.23kB                     0.3s
+ => => sha256:d8ae5f65d97ef1b391bb3099597b31795f93d772af2d2be7fad21a649bc1fb2e 5.24MB / 5.24MB                     1.4s
+ => => sha256:a52ea482db5702afb15f638193ca97b9407c96114089cf0a0205a69f32e571a7 55.63MB / 55.63MB                  34.4s
+ => => sha256:b890c9407285c31d25426ef154b55c72e225f19b478a59451b01a8a44f5ea4f7 49.31MB / 49.31MB                  60.1s
+ => => extracting sha256:b890c9407285c31d25426ef154b55c72e225f19b478a59451b01a8a44f5ea4f7                          8.2s
+ => => extracting sha256:a52ea482db5702afb15f638193ca97b9407c96114089cf0a0205a69f32e571a7                          7.6s
+ => => extracting sha256:d8ae5f65d97ef1b391bb3099597b31795f93d772af2d2be7fad21a649bc1fb2e                          0.3s
+ => => extracting sha256:01f97d1e583fbbd652ca4ab0b94b888be23dc84099735684e9095dbea4cc136a                          0.0s
+ => => extracting sha256:add9a913292e0ee6b6256120462f6013e47cfc83ca38fe62c910e31ef8903916                          7.0s
+ => => extracting sha256:844d30ade61d27e39771ded7f6e50a42d294ac1b6c467e6caf9920a3ae2f44b1                          0.2s
+ => => extracting sha256:8957c4df8f9d89bcbe692b371fe0add0af6f617d75267a0589ec43bdaa94be79                          0.4s
+ => => extracting sha256:f19a623914320692b9eb745387631946e7f30fb87f577b2d2a5d25b4d02ea044                          3.1s
+ => => extracting sha256:ae71a7561ea537a28198d728269b680eda28ec3bb9fa45ec2583730670554f66                          3.3s
+ => => extracting sha256:a5e3afd1e0b3cf2f1b5d1230490decd35079d8e941c321618ed2efef69ba9bfd                          0.0s
+ => => extracting sha256:18e2bde91fb067df55af69149ac5e3edaf075d403d079d1b471fad9ac8b4fe62                          0.0s
+ => => extracting sha256:adea3ef8b4db3e85e81608a94ff829a46d51669a65671056c1752bd8b8da8232                          0.0s
+ => [2/2] RUN apt-get update &&     apt-get install -y     docker.io     docker-compose     git                  149.1s
+ => exporting to image                                                                                            70.6s
+ => => exporting layers                                                                                           53.7s
+ => => exporting manifest sha256:565a81b3a0bb85866274b8a41ad988ad8ccbfaf87dd59c975d0dd88b8ffbe895                  0.0s
+ => => exporting config sha256:32fcc4e7e606071550ef7f67255ef91ef2e144a1f7d7a723b5ccfea8f7486a09                    0.0s
+ => => exporting attestation manifest sha256:b547953eca1427d09962410a25589d9d52d64f7dad0762f621530b2088840bbc      0.0s
+ => => exporting manifest list sha256:47e7a3422cd21d8cd5c07191803796620e9a617cb7cc267c55d775d93defc86b             0.0s
+ => => naming to docker.io/justinaugust123/my-website:latest                                                       0.0s
+ => => unpacking to docker.io/justinaugust123/my-website:latest                                                   16.5s
+root@DESKTOP-QC3MR27:/home/justin/my-website# docker images
+                                                                                                    i Info →   U  In Use
+IMAGE                               ID             DISK USAGE   CONTENT SIZE   EXTRA
+justinaugust123/my-website:latest   47e7a3422cd2        1.5GB          471MB
+root@DESKTOP-QC3MR27:/home/justin/my-website# docker rm -f demo-container 2>/dev/null || true
+er run -d \
+  --name demo-container \
+  -p 3000:3000 \
+  justinaugust123/my-website:latestroot@DESKTOP-QC3MR27:/home/justin/my-website#
+root@DESKTOP-QC3MR27:/home/justin/my-website# docker run -d \
+>   --name demo-container \
+>   -p 3000:3000 \
+>   justinaugust123/my-website:latest
+30cd1dd2f11aba1fe47f085e0b941513e592eb562b41e41959381592b23139eb
+root@DESKTOP-QC3MR27:/home/justin/my-website# docker ps
+CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS         PORTS                                                              NAMES
+30cd1dd2f11a   justinaugust123/my-website:latest   "/usr/bin/tini -- /u…"   19 seconds ago   Up 6 seconds   8080/tcp, 0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp, 50000/tcp   demo-container
+root@DESKTOP-QC3MR27:/home/justin/my-website#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'justinaugust123/my-website'
+        IMAGE_TAG  = 'latest'
+    }
+
+    stages {
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+            }
+        }
+
+        stage('Test Image') {
+            steps {
+                sh 'docker image inspect ${IMAGE_NAME}:${IMAGE_TAG}'
+            }
+        }
+
+        stage('Login Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-user-pass',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login \
+                        -u "$DOCKER_USERNAME" \
+                        --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                sh 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Docker image pushed successfully.'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+sudo apt update
+sudo apt install -y docker.io curl
+
+sudo systemctl enable docker
+sudo systemctl start docker
+
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+
+minikube start --driver=docker --force
+
+
+
+
+
+sqa_f50b100f11c5a75c689ef1fe0abb35bf2492195f
+
+
+
+
+
+
+# Start development
+npm run dev
+
+# Build
+npm run build
+
+# Start production
+npm start
+
+# Docker build
+docker build -t nextjs-devops-monitoring .
+
+# Docker run
+docker run -d -p 3000:3000 --name nextjs-app nextjs-devops-monitoring
+
+# Start monitoring stack
+docker compose up -d
+
+# Stop monitoring stack
+docker compose down
+
+# View containers
+docker ps
+
+# Next.js logs
+docker logs nextjs-app
+
+# Prometheus logs
+docker logs prometheus
+
+# Grafana logs
+docker logs grafana
+
+# Git
+git add .
+git commit -m "update"
+git push
+
+
+
